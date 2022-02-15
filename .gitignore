@@ -9,3 +9,8 @@
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 **/.history
+
+**/.cph/
+.cph/**/*   
+
+
