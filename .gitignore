@@ -11,6 +11,9 @@
 **/.history
 
 **/.cph/
-.cph/**/*   
+.cph/**/*  
+
+**/*.exe
+*.exe
 
 
