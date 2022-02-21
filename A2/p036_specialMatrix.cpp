@@ -23,13 +23,10 @@ int main()
 			sumc[i] += a[j][i];
 		}
 	}
-	sort(sumr, sumr + n);
-	sort(sumc, sumc + n);
-	int ans = 0;
+	ll maxim = max(*max_element(sumr, sumr + n), *max_element(sumc, sumc + n));
+	ll ans = 0;
 	for (ll i = 0; i < n; i++)
-		ans += abs(sumr[i] - sumr[n / 2]);
-	for (ll i = 0; i < n; i++)
-		ans += abs(sumc[i] - sumc[n / 2]);
+		ans += maxim - sumr[i];
 	cout << ans;
 	return 0;
 }

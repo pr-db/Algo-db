@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -11,19 +10,27 @@ int main()
 	ll n, m, q;
 	cin >> n >> m >> q;
 	ll a[n][m];
-	map<ll, pair<ll, ll>> mp;
 	for (ll i = 0; i < n; i++)
 		for (ll j = 0; j < m; j++)
-		{
 			cin >> a[i][j];
-			mp[a[i][j]] = {i, j};
-		}
+	ll b[q], c[q], i = 0, j;
+	for (ll p = 0; p < q; p++)
+		cin >> b[p];
 
-	ll b[q];
+	sort(b, b + q);
 	for (ll p = 0; p < q; p++)
 	{
-		cin >> b[p];
-		cout << mp[b[p]].first << " " << mp[b[p]].second << "\n";
+		j = m - 1;
+		while (i < n && j >= 0)
+		{
+			if (b[p] == a[i][j])
+				break;
+			else if (b[p] > a[i][j])
+				i++;
+			else
+				j--;
+		}
+		cout << b[p] << " = " << i << " " << j << "\n";
 	}
 	return 0;
 }

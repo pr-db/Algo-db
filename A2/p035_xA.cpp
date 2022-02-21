@@ -10,38 +10,24 @@ int main()
 	ll n, m, q;
 	cin >> n >> m >> q;
 	ll a[n][m];
+
+	map<ll, pair<ll, ll>> mp;
 	for (ll i = 0; i < n; i++)
+	{
 		for (ll j = 0; j < m; j++)
+		{
 			cin >> a[i][j];
+			mp[a[i][j]] = {i, j};
+		}
+	}
 
 	ll b[q], i, j;
+
 	for (ll p = 0; p < q; p++)
 	{
 		cin >> b[p];
+		cout << mp[b[p]].first << " " << mp[b[p]].second << "\n";
 	}
 
-	for (ll p = 0; p < q; p++)
-	{
-		i = 0;
-		j = m - 1;
-		bool eq = false;
-		while (j >= 0 && i < n)
-		{
-			if (b[p] == a[i][j])
-			{
-				eq = true;
-				break;
-			}
-
-			else if (b[p] > a[i][j])
-				i++;
-			else
-				j--;
-		}
-		if (eq)
-		{
-			cout << i << " " << j << "\n";
-		}
-	}
 	return 0;
 }
