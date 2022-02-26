@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-typedef vector<int> v;
-typedef vector<vector<int>> vv;
+typedef vector<long long> v;
 
 int main()
 {
@@ -14,31 +13,49 @@ int main()
 	for (ll i = 0; i < n; i++)
 		cin >> a[i];
 	sort(a.begin(), a.end());
-	v dif(n - 1);
-	for (int i = 0; i < n - 1; i++)
-		dif[i] = a[i + 1] - a[i];
-	ll fmax = *max_element(dif.begin(), dif.end()), smax = 0, fc = 0;
-	for (int i = 0; i < n - 1; i++)
+	v d(n - 1),d1,d2;
+	v ans;
+	for (ll i = 1; i < n;i++)
 	{
-		if (dif[i] > smax && dif[i] != fmax)
-			smax = dif[i];
-		else if (dif[i] == fmax)
-			fc++;
+		d[i-1]=(a[i] - a[i - 1]);
 	}
-	if (fc > 1)
-		smax = fmax;
-	v nb(4);
-	for (int i = 0; i < n - 1; i++)
+		d1.push_back(a[0]);
+	for (ll i = 0; i < n - 1;i++)
 	{
-		if(dif[i]==fmax)
-		{
-		if(i>0)
-			nb[0] = dif[i - 1];
+		if(i%2==0)
+			d2.push_back(d[i]);
 		else
-		{
-			/* code */
-		}
-		
+			d1.push_back(d[i]);
 	}
+	if((n-1)%2==0)
+		d2.push_back(a[n - 1]);
+	else
+		d1.push_back(a[n - 1]);
+
+
+	ll f1 = *max_element(d1.begin(), d1.end()), s1 = 0, fc1 = 0;
+	for (ll i = 0; i < d1.size(); i++)
+	{
+		if (d1[i] > s1 && d1[i] != f1)
+			s1 = d1[i];
+		else if (d1[i] == f1)
+			fc1++;
+	}
+	if (fc1 > 1)
+		s1 = f1;
+
+	ll f2 = *max_element(d2.begin(), d2.end()), s2 = 0, fc2 = 0;
+	for (ll i = 0; i < d2.size(); i++)
+	{
+		if (d2[i] > s2 && d2[i] != f2)
+			s2 = d2[i];
+		else if (d2[i] == f2)
+			fc1++;
+	}
+	if (fc2 > 1)
+		s2 = f2;
+
+	
+
 	return 0;
 }

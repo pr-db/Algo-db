@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-typedef vector<long long> v;
-typedef vector<vector<long long>> vv;
 
 int main()
 {
@@ -10,7 +8,7 @@ int main()
 	cin.tie(NULL);
 	ll n, k;
 	cin >> n >> k;
-	v a(n);
+	vector<int> a(n);
 	for (ll i = 0; i < n; i++)
 	{
 		cin >> a[i];

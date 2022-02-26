@@ -17,7 +17,6 @@ int main()
 	}
 	sort(c.begin(), c.end());
 	ans += c[0].first+c[0].second;
-	
 	for (int i = 1; i < n; i++)
 	{
 		if(ans<c[i].first)
