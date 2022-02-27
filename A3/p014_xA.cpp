@@ -24,7 +24,7 @@ int main()
 	}
 	sort(v.begin(), v.end());
 
-	ll ans = 10000000;
+	ll ans = INT_MAX;
 	for (ll i = 0; i < n; i++)
 	{
 		for (ll j = i + 1; j < n; j++)

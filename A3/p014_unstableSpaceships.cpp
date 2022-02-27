@@ -1,61 +1,57 @@
 #include <bits/stdc++.h>
+
 using namespace std;
-typedef long long int ll;
-typedef vector<long long> v;
+
+typedef unsigned long long int ll;
+
+// 1 1 2 2 3 6 100 101
+//  0   0   3     1
+//    1   1   94
 
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	ll n;
-	cin >> n;
-	v a(n);
+
+	ll x, inp;
+	cin >> x;
+	ll n = 2 * x;
+	vector<ll> v;
 	for (ll i = 0; i < n; i++)
-		cin >> a[i];
-	sort(a.begin(), a.end());
-	v d(n - 1),d1,d2;
-	v ans;
-	for (ll i = 1; i < n;i++)
 	{
-		d[i-1]=(a[i] - a[i - 1]);
+		cin >> inp;
+		v.push_back(inp);
 	}
-		d1.push_back(a[0]);
-	for (ll i = 0; i < n - 1;i++)
+	sort(v.begin(), v.end());
+
+	ll ans = INT_MAX;
+	for (ll i = 0; i < n; i++)
 	{
-		if(i%2==0)
-			d2.push_back(d[i]);
-		else
-			d1.push_back(d[i]);
+		for (ll j = i + 1; j < n; j++)
+		{
+			vector<ll> c;
+			for (ll k = 0; k < n; k++)
+			{
+				if (k == i || k == j)
+				{
+					continue;
+				}
+				c.push_back(v[k]);
+			}
+
+			ll sum = 0;
+			for (ll i = 0; i < c.size(); i++)
+			{
+				if (i % 2 != 0)
+				{
+					sum += (c[i] - c[i - 1]);
+				}
+			}
+			ans = min(ans, sum);
+		}
 	}
-	if((n-1)%2==0)
-		d2.push_back(a[n - 1]);
-	else
-		d1.push_back(a[n - 1]);
 
-
-	ll f1 = *max_element(d1.begin(), d1.end()), s1 = 0, fc1 = 0;
-	for (ll i = 0; i < d1.size(); i++)
-	{
-		if (d1[i] > s1 && d1[i] != f1)
-			s1 = d1[i];
-		else if (d1[i] == f1)
-			fc1++;
-	}
-	if (fc1 > 1)
-		s1 = f1;
-
-	ll f2 = *max_element(d2.begin(), d2.end()), s2 = 0, fc2 = 0;
-	for (ll i = 0; i < d2.size(); i++)
-	{
-		if (d2[i] > s2 && d2[i] != f2)
-			s2 = d2[i];
-		else if (d2[i] == f2)
-			fc1++;
-	}
-	if (fc2 > 1)
-		s2 = f2;
-
-	
+	cout << ans << "\n";
 
 	return 0;
 }

@@ -26,7 +26,6 @@ int main()
 			}
 			i = j-1;
 			t++;
-			cout << t << " ";
 			continue;
 		}
 		else
