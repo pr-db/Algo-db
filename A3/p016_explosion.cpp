@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-typedef vector<long long> v;
 
 int main()
 {
@@ -9,29 +8,35 @@ int main()
 	cin.tie(NULL);
 	ll n;
 	cin >> n;
-	v a(n);
+	vector<ll> a(n);
 	for (ll i = 0; i < n; i++)
 		cin >> a[i];
 	sort(a.begin(), a.end());
-	ll t = 1, ans = 1, now = 0, next = 0;
-	for (int i = 0,j=1; i < n;)
+	ll ans = 1;
+	for (ll i = 0; i < n; i++)
 	{
-		if (a[j] <= a[i] + t and j<n)
+		ll maxi = ans;
+		ans = 1;
+		ll j = i + 1, k = i - 1, ji = i, ki = i;
+		ll f1 = 1, f2 = 1;
+		for (ll t = 1;; t++)
 		{
-			while(a[j] <= a[i] + t and j<n)
-			{
-				ans++;
-				//cout << a[j] << " ";
-				j++;
-			}
-			i = j-1;
-			t++;
-			continue;
+			if ((a[j] <= a[ji] + t) && j < n && f1)
+				for (; (a[j] <= a[ji] + t) && j < n; j++, ans++);
+			else
+				f1 = 0;
+			if ((a[k] >= a[ki] - t) && k >= 0 && f2)
+				for (; (a[k] >= a[ki] - t) && k >= 0; k--, ans++);
+			else
+				f2 = 0;
+			if (f1 == 0 && f2 == 0)
+				break;
+			ji = j - 1;
+			ki = k + 1;
 		}
-		else
-			break;
-		
+		ans = max(maxi, ans);
 	}
 	cout << ans;
+
 	return 0;
 }
