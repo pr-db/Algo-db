@@ -8,8 +8,16 @@ int main()
 	cin.tie(NULL);
 	ll n, k;
 	cin >> n >> k;
-	vector<ll> a(n);
+	vector<int> a(n);
 	for (ll i = 0; i < n; i++)
 		cin >> a[i];
+	for (ll i = 0; i < k;i++)
+	{
+		ll temp = a[0];
+		a.erase(a.begin());
+		a.push_back(temp);
+	}
+	for (ll i = 0; i < n; i++)
+		cout<< a[i]<<" ";
 	return 0;
 }
