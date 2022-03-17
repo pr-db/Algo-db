@@ -1,28 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
-
-class pic
+map<ll, ll> pos[5];
+bool sortByIndex(ll a, ll b)
 {
-	ll num;
-	ll index;
-};
-bool sortByIndex(vector<ll> &a,ll bi,ll bj)
-{
-	auto iti = find(a.begin(), a.end(), bi);
-	auto itj = find(a.begin(), a.end(), bj);
-	ll i = iti - a.begin();
-	ll j = itj - a.begin();
-	return i < j;
+	ll f=0;
+	for (ll i = 0; i < 5;i++)
+		f += pos[i][a] < pos[i][b];
+	return f > 2;
 }
 int main()
 {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
 	ll n;
-	cin >> n ;
-	pic a[5][n];
-		
+	cin >> n;
+	ll a[n];
+	for (ll i = 0; i < 5; i++)
+		for (ll j = 0; j < n; j++)
+		{
+			ll x;
+			cin >> x;
+			pos[i][x] = j;
+			a[j] = x;
+		}
+	sort(a, a + n, sortByIndex);
+	for (ll i = 0; i < n;i++)
+		cout << a[i] << " ";
 
-	return 0;
+		return 0;
 }
