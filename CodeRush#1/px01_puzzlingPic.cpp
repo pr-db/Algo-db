@@ -24,7 +24,7 @@ int main()
 		}
 	sort(a, a + n, sortByIndex);
 	for (ll i = 0; i < n;i++)
-		cout << a[i] << " ";
+		cout << a[i] << "\n";
 
 		return 0;
 }
