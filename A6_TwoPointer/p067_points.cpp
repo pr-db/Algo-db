@@ -13,7 +13,7 @@ int main()
 	vector<ll> a(n);
 	for (ll i = 0; i < n; i++)
 		cin >> a[i];
-	for (ll i = 0, j = 1; i < n-1 && i < j;)
+	for (ll i = 0, j = 2; i < n - 2 && i < j&&j<n;)
 	{
 		cout << i << " " << j << "  " << a[j] - a[i] << ",  ";
 		if (a[j] - a[i] <= k)
@@ -23,12 +23,20 @@ int main()
 				j++;
 			else
 			{
+				// cout << "hi";
 				i++;
-				j = i + 1;
+				j = i + 2;
+				if(j>n-1)
+					break;
 			}
 		}
-		else if (a[j] - a[i] > k)
+		else 
+		{
 			i++;
+			j = i + 2;
+			if (j > n - 1)
+				break;
+		}
 		cout << c << "\n";
 	}
 	cout << c;
