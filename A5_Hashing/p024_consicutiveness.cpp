@@ -5,6 +5,8 @@ typedef long long int ll;
 	ios_base::sync_with_stdio(false); \
 	cin.tie(NULL);
 
+// 1 2 3 4 5 7
+
 int main()
 {
 	FastIO;
@@ -22,14 +24,17 @@ int main()
 	for (auto &it : cons)
 		v.push_back(it);
 
-	for (ll i = 1; i < v.size(); i++)
-		if (v[i] == v[i - 1]+1)
+	for (ll i = 1; i < v.size(); i++){
+		if (v[i] == v[i - 1] + 1)
 			m++;
 		else
 		{
-			mx = max(mx, m);
+
 			m = 1;
 		}
+		mx = max(mx, m);
+	}
+		
 
 	cout << mx;
 	return 0;
