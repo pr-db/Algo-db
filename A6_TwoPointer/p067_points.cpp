@@ -13,31 +13,30 @@ int main()
 	vector<ll> a(n);
 	for (ll i = 0; i < n; i++)
 		cin >> a[i];
-	for (ll i = 0, j = 2; i < n - 2 && i < j&&j<n;)
+	vector<ll> s(n);
+	ll sum = 0;
+	for (ll i = 0; i < n; i++)
 	{
-		cout << i << " " << j << "  " << a[j] - a[i] << ",  ";
+		sum += i + 1;
+		s[i] += sum;
+		// cout << s[i] << " ";
+	}
+	cout << "\n";
+	for (ll i = 0, j = n - 1; i < n - 2 && i + 1 < j;)
+	{
+		// cout << i << " " << j << "  " << a[j] - a[i] << ",  ";
 		if (a[j] - a[i] <= k)
 		{
-			c += j - i - 1;
-			if (j < n - 1)
-				j++;
-			else
-			{
-				// cout << "hi";
-				i++;
-				j = i + 2;
-				if(j>n-1)
-					break;
-			}
-		}
-		else 
-		{
+			c += s[j - i - 2];
+			// cout << j - i - 2 << "  ";
 			i++;
-			j = i + 2;
-			if (j > n - 1)
-				break;
+			j = n - 1;
 		}
-		cout << c << "\n";
+		else if (j > i + 2)
+				j--;
+		else
+			break;
+		// cout << c << "\n";
 	}
 	cout << c;
 	return 0;
