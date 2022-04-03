@@ -10,6 +10,6 @@ int main()
 	FastIO;
 	ll n;
 	cin >> n;
-	cout << __popcount(n);
+	cout << __builtin_popcount(n);
 	return 0;
 }
