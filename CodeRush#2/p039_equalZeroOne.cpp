@@ -21,6 +21,7 @@ int main()
 			a[i] = -1;
 		sum += a[i];
 		b[i] = sum;
+		cout << b[i] << " ";
 	}
 	for (ll i = 0; i < n; i++)
 	{
@@ -33,7 +34,7 @@ int main()
 		else
 			mp[b[i]]++;
 	}
-	cout << ans;
+	cout <<"\n"<< ans;
 
 	return 0;
 }
