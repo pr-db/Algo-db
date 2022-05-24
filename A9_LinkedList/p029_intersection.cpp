@@ -17,6 +17,14 @@ public:
 	void print_list(Node *node);
 };
 
+void Node::push_front(Node **head_ref, ll new_data)
+{
+	Node *new_node = new Node();
+	new_node->data = new_data;
+	new_node->next = *head_ref;
+	*head_ref = new_node;
+}
+
 void Node::push_back(Node *node, ll new_data)
 {
 	Node *new_node = new Node();
@@ -36,36 +44,46 @@ void Node::print_list(Node *node)
 	}
 }
 
-bool hasCycle(Node *head)
+Node *getIntersectionNode(Node *headA, Node *headB)
 {
-	if (head == NULL)
-		return false;
-	Node *fh = head;
-	Node *sh = head;
-	while (sh && fh && fh->next)
+	int a = 0, b = 0;
+	Node *ha = headA, *hb = headB;
+	while (ha->next)
 	{
-		sh = sh->next;
-		fh = fh->next->next;
-
-		if (sh == fh)
-			return true;
+		a++;
+		ha = ha->next;
 	}
-	return false;
+	while (hb->next)
+	{
+		b++;
+		hb = hb->next;
+	}
+	if (ha != hb)
+		return NULL;
+	ha = headA, hb = headB;
+	if (b >= a)
+		for (int i = 0; i < b - a; i++)
+			hb = hb->next;
+	else
+		for (int i = 0; i < a - b; i++)
+			ha = ha->next;
+	while (ha != hb)
+	{
+		ha = ha->next;
+		hb = hb->next;
+	}
+
+	return ha;
 }
+
 int main()
 {
 	FastIO;
 	Node *head = NULL;
-	ll n, p;
-	cin >> n >> p;
-	for (ll i = 0; i < n; i++)
-	{
-		ll inp;
-		cin >> inp;
-		head->push_back(head, inp);
-	}
-	head->print_list(head);
+	head->push_front(&head, 12);
+	head->push_front(&head, 13);
+	head->push_back(head, 11);
 
-	cout << hasCycle(head);
+	head->print_list(head);
 	return 0;
 }

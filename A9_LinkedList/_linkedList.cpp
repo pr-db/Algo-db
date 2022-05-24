@@ -30,7 +30,9 @@ void Node::push_back(Node* node, ll new_data)
 	Node *new_node = new Node();
 	new_node->data = new_data;
 	new_node->next = NULL;
-	
+	while(node->next!=NULL)
+		node = node->next;
+	node->next = new_node;
 }
 
 void Node::print_list(Node *node)
@@ -47,6 +49,9 @@ int main()
 	FastIO;
 	Node *head = NULL;
 	head->push_front(&head, 12);
+	head->push_front(&head, 13);
+	head->push_back(head, 11);
+
 	head->print_list(head);
 	return 0;
 }
