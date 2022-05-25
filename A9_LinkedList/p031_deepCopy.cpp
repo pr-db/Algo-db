@@ -21,18 +21,23 @@ public:
 		random = NULL;
 	}
 };
-
+map<Node *, Node *> m;
 Node *copyRandomList(Node *head)
 {
-	Node *h = head;
-	map<Node *, Node *> m;
-
-	if(h==NULL)
+	if (head == NULL)
 		return NULL;
+	if (m.find(head) != m.end())
+		return m[head];
+	m[head] = new Node(head->val);
+
+	m[head]->next = copyRandomList(head->next);
+	m[head]->random = copyRandomList(head->random);
+
+	return m[head];
 }
 int main()
 {
 	FastIO;
-	
+
 	return 0;
 }
