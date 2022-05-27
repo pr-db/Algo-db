@@ -7,47 +7,65 @@ typedef long long int ll;
 	cout.tie(NULL)
 
 class Graph
+{
+private:
+	vector<ll> path;
+
+public:
+	ll V;
+	ll E;
+	vector<ll> *adj;
+	Graph(ll _V, ll _E)
+	{
+		this->V = _V;
+		this->E = _E;
+		this->adj = new vector<ll>[_V];
+	}
+	void addEdge(ll u, ll v)
+	{
+		adj[u - 1].push_back(v - 1);
+		adj[v - 1].push_back(u - 1);
+	}
+	vector<ll> shortest_path;
+	void sp(ll src, ll dest, vector<bool> &vis)
+	{
+		if (vis[src])
+			return;
+		if (src == dest)
+		{
+			path.push_back(src);
+			if (shortest_path.size() == 0 or path.size() < shortest_path.size())
+				shortest_path = path;
+			path.pop_back();
+			return;
+		}
+		vis[src] = 1;
+		path.push_back(src);
+		for (ll node : this->adj[src])
+			if (!vis[node])
+				sp(node, dest, vis);
+		vis[src] = 0;
+		path.pop_back();
+	}
+};
+
 int main()
 {
-	FastIO;
 	ll n, m;
 	cin >> n >> m;
-
-	map<string, ll> s;
-	vector<vector<ll>> a(n);
-	vector<vector<string>> adj(n, vector<string>(n));
-	vector<vector<ll>> vis(n, vector<ll>(n));
-
-	ll k = 1;
-	for (ll i = 0; i < n; i++)
+	Graph g(n, m);
+	for (ll i = 0; i < m; i++)
 	{
-		string u, v, l;
-		cin >> u >> v >> l;
-		if (!s[u])
-			s[u] = k++;
-		if (!s[v])
-			s[v] = k++;
-		adj[s[u] - 1][s[v] - 1] = l;
-		vis[s[u] - 1][s[v] - 1] = 1;
+		ll ed1, ed2;
+		cin >> ed1 >> ed2;
+		g.addEdge(ed1, ed2);
 	}
-	string start, end;
-	ll st = s[start], en = s[end];
-	cin >> start >> end;
-	vector<string> ans;
-	for (ll i = 0; i < n;)
-	{	
-		for (ll j = 0; j < n;)
-		{
-			if()
-			if (vis[i][j] == 1)
-			{
-				i = j;
-				break;
-			}
-			else
-				j++;
-		}
-
-		}
-	return 0;
+	ll src, dst;
+	cin >> src >> dst;
+	vector<bool> vis(g.V, 0);
+	g.sp(src-1, dst-1, vis);
+	ll ans = g.shortest_path.size() - 1;
+	if (ans < 0)
+		ans = 0;
+	cout << ans;
 }
