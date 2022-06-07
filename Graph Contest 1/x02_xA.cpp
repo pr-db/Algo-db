@@ -64,16 +64,36 @@ int main()
 	}
 
 	vector<ll> dis(n + 1, 0);
+	vector<ll> vis(n + 1, 0);
+
+	queue<ll> bq;
+	bq.push(1);
+	vis[1] = 1;
+	while (!bq.empty())
+	{
+		ll curr = bq.front();
+		bq.pop();
+
+		for (auto x : adj[curr])
+		{
+			if (!vis[x])
+			{
+				vis[x] = 1;
+				bq.push(x);
+			}
+		}
+	}
 
 	dis[1] = 0;
-
 	vector<ll> ans = tpo(n, m, adj);
-
 	for (ll i = 0; i < ans.size(); i++)
 	{
-		for (auto x : adj[i])
+		if (vis[ans[i]])
 		{
-			dis[x] = max(dis[x], dis[i] + 1);
+			for (auto x : adj[ans[i]])
+			{
+				dis[x] = max(dis[x], dis[ans[i]] + 1);
+			}
 		}
 	}
 	if (dis[n])
@@ -82,7 +102,7 @@ int main()
 	}
 	else
 	{
-		cout << 0 << "\n";
+		cout << -1 << "\n";
 	}
 
 	return 0;
