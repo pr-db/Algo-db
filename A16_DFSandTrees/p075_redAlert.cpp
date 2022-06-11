@@ -39,7 +39,7 @@ ll DFS(Tree t, ll cr, ll cur, ll par = -1)
 	for (auto child : t.adj[cur])
 		if (child != par)
 			sum += DFS(t, cr, child, cur);
-	if (t.adj[cur].size() <= 1)
+	if ((t.adj[cur].size() == 1 && t.adj[cur][0] == par) || t.adj[cur].size() == 0)
 		sum++;
 	return sum;
 }
