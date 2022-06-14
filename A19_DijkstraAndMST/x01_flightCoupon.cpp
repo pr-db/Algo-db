@@ -6,65 +6,58 @@ typedef long long int ll;
 	cin.tie(NULL);                    \
 	cout.tie(NULL)
 
-class Edge
+class Graph
 {
 public:
-	long long u, v, w;
-	bool operator<(Edge const &other)
-	{ // helps find edge with smaller wegiht b/w two variable of Edge type
-		return w < other.w;
+	ll n;
+	ll m;
+	vector<vector<pair<ll, ll>>> adj;
+	vector<vector<pair<ll, ll>>> radj;
+
+	Graph(ll _n, ll _m)
+	{
+		this->n = _n;
+		this->m = _m;
+		this->adj = vector<vector<pair<ll, ll>>>(_n);
+		this->radj = vector<vector<pair<ll, ll>>>(_n);
+	}
+
+	void addEdge(ll u, ll v, ll wt)
+	{
+		adj[u - 1].push_back(make_pair(v - 1, wt));
+		radj[v - 1].push_back(make_pair(u - 1, wt));
 	}
 };
 
-class DSU
+void dijkstra(vector<vector<pair<ll, ll>>> adj, ll s, vector<ll> &d)
 {
-public:
-	vector<int> par;
-	DSU(int nComponents)
-	{
-		par.resize(nComponents, -1);
-	}
-	int root(int v)
-	{
-		if (par[v] < 0)
-			return v;
-		return par[v] = root(par[v]);
-	} // finds component number of an entity
+	ll n = adj.size();
+	d.assign(n, INT64_MAX);
 
-	void merge(int x, int y)
-	{ // merges two different components into one
-		if ((x = root(x)) == (y = root(y)))
-			return;
-		if (par[y] < par[x])
-			swap(x, y);
-		par[x] += par[y];
-		par[y] = x;
-	}
-};
-
-void kruskal(int n, vector<Edge> edges)
-{
-	long long ans = 0;
-	DSU dsu(n + 1);
-
-	sort(edges.begin(), edges.end());
-	for (int i = 0; i < edges.size(); ++i)
+	d[s] = 0;
+	using pii = pair<ll, ll>;
+	priority_queue<pii, vector<pii>, greater<pii>> q;
+	q.push({0, s});
+	while (!q.empty())
 	{
-		if (dsu.root(edges[i].u) != dsu.root(edges[i].v))
-		{ // edge connects two nodes of different components
-			dsu.merge(edges[i].u, edges[i].v);
-			ans += edges[i].w;
+		ll v = q.top().second;
+		ll d_v = q.top().first;
+		q.pop();
+		if (d_v != d[v])
+			continue;
+
+		for (auto edge : adj[v])
+		{
+			ll to = edge.first;
+			ll len = edge.second;
+
+			if (d[v] + len < d[to])
+			{
+				d[to] = d[v] + len;
+				q.push({d[to], to});
+			}
 		}
-		cout << dsu.par[i] << " ";
 	}
-
-	unordered_set<int> countComponents;
-	for (int i = 1; i <= n; ++i)
-		countComponents.insert(dsu.root(i));
-	if (countComponents.size() > 1)
-		cout << "IMPOSSIBLE\n";
-	else
-		cout << ans << "\n";
 }
 
 int main()
@@ -72,11 +65,33 @@ int main()
 	FastIO;
 	ll n, m;
 	cin >> n >> m;
-	vector<Edge> edges(m);
+	Graph g(n, m);
 	for (ll i = 0; i < m; i++)
-		cin >> edges[i].u >> edges[i].v >> edges[i].w;
+	{
+		ll u, v, w;
+		cin >> u >> v >> w;
+		g.addEdge(u, v, w);
+	}
+	vector<ll> d1, dn;
+	dijkstra(g.adj, 0, d1);
+	dijkstra(g.radj, n - 1, dn);
 
-	kruskal(n, edges);
+	ll ans = INT64_MAX;
 
+	// for (ll i = 0; i < n; i++)
+	// 	cout << d1[i] << " ";
+	// cout << "\n";
+	// for (ll i = 0; i < n; i++)
+	// 	cout << dn[i] << " ";
+	// cout << "\n";
+
+	for (ll i = 0; i < n; i++)
+		for (auto u : g.adj[i])
+		{
+			if (d1[i] == INT64_MAX || dn[u.first] == INT64_MAX)
+				continue;
+			ans = min(ans, d1[i] + dn[u.first] + u.second / 2);
+		}
+	cout << ans;
 	return 0;
 }
