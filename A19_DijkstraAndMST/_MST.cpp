@@ -19,19 +19,19 @@ public:
 class DSU
 {
 public:
-	vector<int> par;
-	DSU(int nComponents)
+	vector<ll> par;
+	DSU(ll nComponents)
 	{
 		par.resize(nComponents, -1);
 	}
-	int root(int v)
+	ll root(ll v)
 	{
 		if (par[v] < 0)
 			return v;
 		return par[v] = root(par[v]);
 	} // finds component number of an entity
 
-	void merge(int x, int y)
+	void merge(ll x, ll y)
 	{ // merges two different components into one
 		if ((x = root(x)) == (y = root(y)))
 			return;
@@ -42,13 +42,13 @@ public:
 	}
 };
 
-void kruskal(int n, vector<Edge> edges)
+void kruskal(ll n, vector<Edge> edges)
 {
 	long long ans = 0;
 	DSU dsu(n + 1);
 
 	sort(edges.begin(), edges.end());
-	for (int i = 0; i < edges.size(); ++i)
+	for (ll i = 0; i < edges.size(); ++i)
 	{
 		if (dsu.root(edges[i].u) != dsu.root(edges[i].v))
 		{ // edge connects two nodes of different components
@@ -58,15 +58,13 @@ void kruskal(int n, vector<Edge> edges)
 		cout << dsu.par[i] << " ";
 	}
 
-	unordered_set<int> countComponents;
-	for (int i = 1; i <= n; ++i)
+	unordered_set<ll> countComponents;
+	for (ll i = 1; i <= n; ++i)
 		countComponents.insert(dsu.root(i));
 	if (countComponents.size() > 1)
 		cout << "IMPOSSIBLE\n";
 	else
 		cout << ans << "\n";
-
-	
 }
 
 int main()
