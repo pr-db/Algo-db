@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long int ll;
@@ -8,10 +9,21 @@ typedef long long int ll;
 int main()
 {
 	FastIO;
-	ll n, k;
+	int n;
 	cin >> n;
-	vector<ll> a(n);
-	for (ll i = 0; i < n; i++)
+	vector<int> a(n);
+	for (int i = 0; i < n; i++)
 		cin >> a[i];
+	int mx = INT_MIN;
+	int cs = 0;
+	for (int i = 0; i < n; i++)
+	{
+		cs += a[i];
+		mx = max(mx, cs);
+		if (cs < 0)
+			cs = 0;
+	}
+
+	cout << mx;
 	return 0;
 }
